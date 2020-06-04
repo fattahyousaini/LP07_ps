@@ -31,7 +31,7 @@ public class FragmentText extends Fragment {
 
     }
 
-    Button btnRetrieveText;
+    Button btnRetrieveText, btnEmail;
     EditText etText;
     TextView tvSmsText;
 
@@ -44,6 +44,24 @@ public class FragmentText extends Fragment {
         etText = view.findViewById(R.id.editTextText);
         btnRetrieveText = view.findViewById(R.id.btnSmsText);
 
+        btnEmail = view.findViewById(R.id.btnEmail);
+
+        btnEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent email = new Intent(Intent.ACTION_SEND);
+                // Put essentials like email address, subject & body text
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"18016553@rp.edu.sg"});
+                email.putExtra(Intent.EXTRA_SUBJECT, "");
+                String statement = tvSmsText.getText().toString();
+                email.putExtra(Intent.EXTRA_TEXT, statement);
+                // This MIME type indicates email
+                email.setType("message/rfc822");
+                // createChooser shows user a list of app that can handle
+                // this MIME type, which is, email
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+            }
+        });
 
         btnRetrieveText.setOnClickListener(new View.OnClickListener() {
             @Override
